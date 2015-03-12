@@ -59,14 +59,12 @@ def get_cpustats():
   """
 
   if fields == 9: # Kernel 2.6.18ish (EL5)
-    print "8 Fields!"
     user, nice, sys, idle, iowait, irq, sirq, steal = (
       float(buf[1]), float(buf[2]),
       float(buf[3]), float(buf[4]),
       float(buf[5]), float(buf[6]),
       float(buf[7]), float(buf[8]))
   elif fields == 10: # Kernel 2.6.24+ (EL6)
-    print "9 Fields" 
     user, nice, sys, idle, iowait, irq, sirq, steal, guest = (
       float(buf[1]), float(buf[2]),
       float(buf[3]), float(buf[4]),
@@ -74,7 +72,6 @@ def get_cpustats():
       float(buf[7]), float(buf[8]),
       float(buf[9]))
   else: # Current Versions around 3.18 atm.
-    print "11 fields!?"
     user, nice, sys, idle, iowait, irq, sirq, steal, guest, guestn = (
       float(buf[1]), float(buf[2]),
       float(buf[3]), float(buf[4]),
