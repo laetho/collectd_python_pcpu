@@ -8,6 +8,8 @@ def get_cpustats():
   fd = open('/proc/stat')
   buf = fd.readlines()[0].split()
 
+  print(len(buf))
+
   user, nice, sys, idle, iowait, irq, sirq, steal, guest, guestn = (
     float(buf[1]), float(buf[2]),
     float(buf[3]), float(buf[4]),
@@ -19,7 +21,7 @@ def get_cpustats():
 
   time.sleep(1)
 
-  fd = open('/proc/stat')
+  fd = open('/proc/stat','r')
   buf = fd.readlines()[0].split()
 
   user_n, nice_n, sys_n, idle_n, iowait_n, irq_n, sirq_n, steal_n, guest_n, guestn_n = (
