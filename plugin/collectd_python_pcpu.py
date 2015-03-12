@@ -1,7 +1,7 @@
 """
   collectd_python_pcpu
 
-
+  Version: 0.0.1
 """
 
 import collectd
@@ -12,7 +12,7 @@ def log_verbose(msg):
   collectd.info('collectd_python_pcpu [verbose]: %s' % msg )
 
 def configure_callback(conf):
-  global IOSTAT_INTERVAL, IOSTAT_VERBOSE, IOSTAT_HOST, IOSTAT_UNIT
+  global PLUGIN_INTERVAL, PLUGIN_VERBOSE, PLUGIN_HOST, PLUGIN_SAMPLEINT
   for node in conf.children:
     if node.key == 'Verbose':
       PLUGIN_VERBOSE = node.values[0]
@@ -23,10 +23,10 @@ def configure_callback(conf):
     elif node.key == 'SampleInt':
       PLUGIN_SAMPLEINT == node.values[0]
     else:
-      collectd.warning('collectd_python_pcpu plugin: Unknown config key: %s.' % node.key )
+      collectd.warning('collectd_python_pcpu: Unknown config key: %s.' % node.key )
 
-def read_callback(stats=None)
-  log_verbose('Read callback called')
+def read_callback(stats=None):
+  log_verbose('collectd_python_pcpu: Read callback called')
 
   stats = get_cpustats()
 
@@ -34,9 +34,13 @@ def read_callback(stats=None)
     collectd.error('collectd_python_iostat plugin: No statistics received')
     return
 
-  for metric,value in stats:
-    print metric value
+  for metric,value in stats.items():
+    dispatch_item(metric,value) 
 
+"""
+  Reads /proc/stat for statistics and calculates delta's from sample
+  interval in percentages.
+"""
 def get_cpustats()
   fd = open('/proc/stat')
   buf = fd.readlines()[0].split()

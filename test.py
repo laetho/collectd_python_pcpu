@@ -67,6 +67,6 @@ def get_cpustats():
 
 stats = get_cpustats()
 
-for k,v in stats.items():
-  print (str(k) + ":" + str(v)) 
+for metric,value in stats.items():
+  print (str(metric) + ":" + str(value)) 
 
